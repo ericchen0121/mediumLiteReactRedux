@@ -8,10 +8,18 @@ class PostsIndex extends Component {
     this.props.fetchPosts();
   }
 
+  renderPosts() {
+    return _.map(this.props.posts, post => {
+      return (
+        <div key={post.id}>{post.content}</div>
+      )
+    })
+  }
+
   render() {
     return (
       <div>
-        Go
+        {this.renderPosts()}
       </div>
     )
   }
