@@ -12,6 +12,7 @@ class PostsNew extends Component {
           className='form-control'
           {...field.input}
         />
+        {field.meta.error}
       </div>
     )
   }
@@ -26,20 +27,41 @@ class PostsNew extends Component {
           component={this.renderField}
         />
         <Field
-          label='Category Tags'
-          name='tags'
+          label='Categories'
+          name='categories'
           component={this.renderField}
         />
         <Field
           label='Content'
-          name='tags'
+          name='content'
           component={this.renderField}
         />
+        <button type='submit' className='btn btn-primary'>Submit</button>
       </form>
     )
   }
 }
 
+// This validate function will be called automatically by reduxForm
+function validate(values) {
+  const errors = {};
+
+  // Validate the inputs from 'values'
+  if (!values.title) {
+    // Title doesn't exist, add a property 'title' to errors object.
+    errors.title = 'Enter a title. *Required*'
+  }
+
+  if (!values.content) {
+    errors.content = 'Enter some content. *Required*'
+  }
+
+  // If errors is empty, form is fine to submit.
+  // If errors has any properties, there are problems with the form.
+  return errors;
+}
+
 export default reduxForm({
+  validate,
   form: 'PostsNewForm'
 })(PostsNew);
